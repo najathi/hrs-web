@@ -2,13 +2,11 @@ import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { SearchContext } from "../../context/SearchContext";
-import { useState } from "react";
 
 
 
 const Navbar = () => {
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -31,8 +29,8 @@ const Navbar = () => {
           </div>
           : (
             <div className="navItems">
-              <button className="navButton"><Link to="/login">Register</Link></button>
-              <button className="navButton"><Link to="/login">Login</Link></button>
+              <Link to="/register"><button className="navButton">Register</button></Link>
+              <Link to="/login"><button className="navButton">Login</button></Link>
             </div>
           )}
       </div>

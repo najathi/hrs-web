@@ -3,7 +3,7 @@ import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
 
-  const { data, loading, error } = useFetch("/hotels?featured=true");
+  const { data, loading } = useFetch("/hotels?featured=true");
 
   return (
     <div className="fp" style={{ flexWrap: 'wrap' }}>

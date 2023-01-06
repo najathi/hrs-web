@@ -13,7 +13,7 @@ const Login = () => {
     password: undefined,
   });
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -39,7 +39,9 @@ const Login = () => {
   return (
     <div className="login">
       <div className="lContainer">
-        <h2 className='mb-4 text-align'>Hotel Reservation System</h2>
+        <Link to="/">
+          <h2 className='mb-4 text-align headingText'>Hotel Reservation System</h2>
+        </Link>
         <h4 className='text-align'>Customer Login</h4><br />
 
         <input

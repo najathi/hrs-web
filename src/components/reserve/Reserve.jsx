@@ -5,14 +5,14 @@ import "./reserve.css"
 import useFetch from "../../hooks/useFetch";
 import { useContext, useState } from "react";
 import { SearchContext } from "../../context/SearchContext";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import apis from "../../apis";
+import { AuthContext } from "../../context/AuthContext";
 
-const Reserve = ({ setOpen, hotelId }) => {
-
+const Reserve = ({ setOpen, hotelId, amount }) => {
+  const { user } = useContext(AuthContext);
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  const { data } = useFetch(`/hotels/room/${hotelId}`);
   const { dates } = useContext(SearchContext);
 
   const handleSelect = (e) => {
@@ -55,6 +55,10 @@ const Reserve = ({ setOpen, hotelId }) => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
+    if (!user) {
+      navigate('/login');
+    }
+
     try {
       await Promise.all(
         selectedRooms.map((roomId) => {
@@ -65,7 +69,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         })
       );
       setOpen(false);
-      navigate("/");
+      navigate("/orders/checkout", { state: { amount } });
     } catch (err) { }
   };
 
@@ -74,7 +78,7 @@ const Reserve = ({ setOpen, hotelId }) => {
     <div className="reserve">
       <div className="rContainer">
         <FontAwesomeIcon icon={faCircleXmark} className="rClose" onClick={() => setOpen(false)} />
-        <span>Select your rooms:</span>
+        <span>Available rooms:</span>
         {data.map((item) => (
           <div className="rItem" key={item._id}>
             <div className="rItemInfo">

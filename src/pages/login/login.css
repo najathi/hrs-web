@@ -38,3 +38,8 @@
 .text-align {
   text-align: center;
 }
+
+.headingText {
+  color: #000;
+  text-decoration: none;
+}

@@ -40,7 +40,9 @@ const Register = () => {
   return (
     <div className="login">
       <div className="lContainer">
-        <h2 className='mb-4 text-align'>Hotel Reservation System</h2>
+      <Link to="/">
+          <h2 className='mb-4 text-align headingText'>Hotel Reservation System</h2>
+        </Link>
         <h4 className='text-align'>Create an Account</h4><br />
 
         <input
