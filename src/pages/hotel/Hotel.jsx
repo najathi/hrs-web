@@ -26,10 +26,10 @@ const Hotel = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error} = useFetch(`/hotels/find/${id}`) ;
+  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
 
-  const {dates, options } = useContext(SearchContext);
-  const {user} = useContext(AuthContext);
+  const { dates, options } = useContext(SearchContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   //starting date - ending date and divide it by a whole day - and give day difference 
@@ -81,9 +81,9 @@ const Hotel = () => {
   };
 
   const handleClick = () => {
-    if(user){
+    if (user) {
       setOpenModal(true);
-    }else{
+    } else {
       navigate("/login");   // if user is not login
     }
   }
@@ -93,7 +93,7 @@ const Hotel = () => {
     <div>
       <Navbar />
       <Header type="list" />
-      {loading ? ( "loading" ) : ( <div className="hotelContainer">
+      {loading ? ("loading") : (<div className="hotelContainer">
         {open && (
           <div className="slider">
             <FontAwesomeIcon
@@ -118,7 +118,7 @@ const Hotel = () => {
         )}
         <div className="hotelWrapper">
           <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="hotelTitle">{data.name}</h1>
+          <h1 className="hotelTitle">{data.name} - {data.city}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
             <span>{data.address}</span>
@@ -127,7 +127,7 @@ const Hotel = () => {
             Excellent location – {data.distance}m from center
           </span>
           <span className="hotelPriceHighlight">
-            Book a stay over ₹{data.cheapestPrice} at this property and get a free airport taxi
+            Book a stay over Rs.{data.cheapestPrice} at this property and get a free airport taxi
           </span>
           <div className="hotelImages">
             {data.photos?.map((photo, i) => (
@@ -145,7 +145,7 @@ const Hotel = () => {
             <div className="hotelDetailsTexts">
               <h1 className="hotelTitle">{data.title}</h1>
               <p className="hotelDesc">
-              {data.desc}
+                {data.desc}
               </p>
             </div>
             <div className="hotelDetailsPrice">
@@ -155,7 +155,7 @@ const Hotel = () => {
                 excellent location score of 9.8!
               </span>
               <h2>
-                <b>₹{days * data.cheapestPrice * options.room}</b> ({days} nights)
+                <b>Rs.{days * data.cheapestPrice * options.room}</b> ({days} nights)
               </h2>
               <button onClick={handleClick}>Reserve or Book Now! </button>
             </div>
@@ -165,8 +165,8 @@ const Hotel = () => {
         <Footer />
       </div>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
-      </div>
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+    </div>
 
   );
 };

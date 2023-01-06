@@ -7,10 +7,10 @@
 }
 
 .fpItem{
-  flex: 1;
   gap: 10px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .fpImg{

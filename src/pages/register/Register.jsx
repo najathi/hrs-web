@@ -1,19 +1,18 @@
 import axios from 'axios';
 import React from 'react';
-import { useContext } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 
-import "./login.css";
+import "./register.css";
 
-const Login = () => {
+const Register = () => {
   const [credentials, setCredentials] = useState({
     username: undefined,
+    email: undefined,
     password: undefined,
   });
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,15 +23,17 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    dispatch({ type: "LOGIN_START" }); //updating loading state
+    setLoading(true);
     try {
-      const res = await axios.post("/auth/login", credentials);
-      console.log(res.data, "type", typeof res.data);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details })
-      navigate("/");
+      const res = await axios.post("/auth/customer/register", credentials);
+      if (res) {
+        setLoading(false);
+        navigate("/login");
+      }
     }
     catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.details });
+      console.log(err.response.details)
+      setLoading(false);
     }
   }
 
@@ -40,12 +41,19 @@ const Login = () => {
     <div className="login">
       <div className="lContainer">
         <h2 className='mb-4 text-align'>Hotel Reservation System</h2>
-        <h4 className='text-align'>Customer Login</h4><br />
+        <h4 className='text-align'>Create an Account</h4><br />
 
         <input
           type="text"
           placeholder="username"
           id="username"
+          onChange={handleChange}
+          className="lInput"
+        />
+        <input
+          type="email"
+          placeholder="E-Mail Address"
+          id="email"
           onChange={handleChange}
           className="lInput"
         />
@@ -57,16 +65,14 @@ const Login = () => {
           className="lInput"
         />
         <button disabled={loading} onClick={handleClick} className="lButton">
-          Login
+          Register
         </button>
-        {error && <span>{error.message}</span>}
-
         <br />
 
-        <Link to="/register">Create an account</Link>
+        <Link to="/login">Already have an account</Link>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
